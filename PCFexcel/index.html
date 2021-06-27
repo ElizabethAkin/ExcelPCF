@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title></title>
+		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+        <script src="js/xlsx.full.min.js"></script>
+        <script src="js/htmlson.js"></script>
+    </head>
+    <body>
+        <input type="file"onchange="importf(this)" />
+        <div id="demo"></div>
+		<table class="example"></table>
+
+        <script>
+            /*
+            FileReader has 4 reading methods:
+                         1.readAsArrayBuffer(file): Read the file as ArrayBuffer.
+                         2. readAsBinaryString(file): read the file as a binary string
+                         3.readAsDataURL(file): read the file as Data URL
+                         4.readAsText(file, [encoding]): read the file as text, the default encoding is'UTF-8'
+                         */
+            var wb;//Read the completed data
+            var rABS = false; //Whether to read the file as a binary string
+
+            function importf(obj) {//Import
+                if(!obj.files) {
+                    return;
+                }
+                var f = obj.files[0];
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    var data = e.target.result;
+                    if(rABS) {
+                        wb = XLSX.read(btoa(fixdata(data)), {//Manual conversion
+                            type: 'base64'
+                        });
+                    } else {
+                        wb = XLSX.read(data, {
+                            type: 'binary'
+                        });
+                    }
+                    //wb.SheetNames[0] is to get the name of the first Sheet in Sheets
+                    //wb.Sheets[Sheet name] get the data of the first Sheet
+                    //document.getElementById("demo").innerHTML = JSON.stringify( XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]) );
+					var data = data = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]);
+					var myTable = $('.example').htmlson({
+						data: data
+					});
+                };
+                if(rABS) {
+                    reader.readAsArrayBuffer(f);
+                } else {
+                    reader.readAsBinaryString(f);
+                }
+            }
+
+            function fixdata(data) { //File transfer to BinaryString
+                var o = "",
+                    l = 0,
+                    w = 10240;
+                for(; l < data.byteLength / w; ++l) o += String.fromCharCode.apply(null, new Uint8Array(data.slice(l * w, l * w + w)));
+                o += String.fromCharCode.apply(null, new Uint8Array(data.slice(l * w)));
+                return o;
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest>
+  <control namespace="PCFexcel" constructor="PCFexcel" version="0.0.28" display-name-key="PCFexcel" description-key="PCFexcel description" control-type="standard">
+    <!-- dataset node represents a set of entity records on CDS; allow more than one datasets -->
+    <data-set name="sampleDataSet" display-name-key="Dataset_Display_Key">
+    </data-set>
+    <property name="entityName" display-name-key="Entity Name" description-key="Entity Name" of-type="SingleLine.Text" usage="input" required="true" />
+    <feature-usage>
+      <uses-feature name="WebAPI" required="true" />
+    </feature-usage>
+    <resources>
+      <code path="index.ts" order="1" />
+      <css path="css/PCFexcel.css" order="1" />
+    </resources>
+    <!-- UNCOMMENT TO ENABLE THE SPECIFIED API
+    <feature-usage>
+      <uses-feature name="Device.captureAudio" required="true" />
+      <uses-feature name="Device.captureImage" required="true" />
+      <uses-feature name="Device.captureVideo" required="true" />
+      <uses-feature name="Device.getBarcodeValue" required="true" />
+      <uses-feature name="Device.getCurrentPosition" required="true" />
+      <uses-feature name="Device.pickFile" required="true" />
+      <uses-feature name="Utility" required="true" />
+      <uses-feature name="WebAPI" required="true" />
+    </feature-usage>
+    -->
+  </control>
+</manifest>
