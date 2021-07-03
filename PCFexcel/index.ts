@@ -3,7 +3,7 @@ import DataSetInterfaces = ComponentFramework.PropertyHelper.DataSetApi;
 type DataSet = ComponentFramework.PropertyTypes.DataSet;
 import * as $ from 'jquery';
 import './js/htmlson.js';
-import './js/batchcreate.js';
+import BatchPostRecords from "./utils/BatchPostRecords";
 
 declare var Xrm: any;
 
@@ -128,6 +128,8 @@ export class PCFexcel implements ComponentFramework.StandardControl<IInputs, IOu
 		});
 		attributes.pop();
 
+		var batchRequest = new BatchPostRecords(url + "/api/data/v9.1/");
+
 		$("#tableWithDataFromExcel tbody tr").each(function(){
 			var jsonDataString = "{"
 			$(this).find("input[type='checkbox']:checked").each(function(){
@@ -142,30 +144,12 @@ export class PCFexcel implements ComponentFramework.StandardControl<IInputs, IOu
 			jsonDataString += "}"
 			if(jsonDataString!="{}")
 			{
-				var req = new XMLHttpRequest();
-				req.open("POST", url + "/api/data/v9.1/contacts", true);
-				req.setRequestHeader("Accept", "application/json");
-				req.setRequestHeader("Content-Type", "application/json; charset=utf-8");
-				req.setRequestHeader("OData-MaxVersion", "4.0");
-				req.setRequestHeader("OData-Version", "4.0");
-				req.onreadystatechange = function() {
-					if (this.readyState == 4) {
-						req.onreadystatechange = null;
-						if (this.status == 204) {
-							console.log('record was created');
-							console.log(this.response);
-						} else {
-							var error = JSON.parse(this.response).error;
-							alert(error.message);
-						}
-					}
-				};
-				req.send(JSON.stringify(jsonDataString));
+				batchRequest.addRequestItem(jsonDataString);
+				
 			}
 		});
-		
 
-		
+		batchRequest.sendRequest();
 	}
 
 	
