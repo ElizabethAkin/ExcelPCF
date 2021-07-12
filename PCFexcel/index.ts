@@ -1,6 +1,4 @@
 import {IInputs, IOutputs} from "./generated/ManifestTypes";
-import DataSetInterfaces = ComponentFramework.PropertyHelper.DataSetApi;
-type DataSet = ComponentFramework.PropertyTypes.DataSet;
 import * as $ from 'jquery';
 import './js/htmlson.js';
 import BatchPostRecords from "./utils/BatchPostRecords";
