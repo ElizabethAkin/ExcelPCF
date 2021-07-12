@@ -20,13 +20,13 @@ export default class BatchPostRecords{
 		this.content.push("");
 		this.content.push(JSON.stringify(entity));
 	}
-	public sendRequest(): void{
+	public sendRequest(): XMLHttpRequest{
 		this.content.push("");
 		this.content.push("--" + this.uniqueId + "--");
 		this.content.push(" ");
 	
 		var xhr = new XMLHttpRequest();
-		xhr.open("POST", encodeURI(this.apiUrl + "$batch"));
+		xhr.open("POST", encodeURI(this.apiUrl + "$batch"), false);
 		xhr.setRequestHeader("Content-Type", "multipart/mixed;boundary=" + 
 			this.uniqueId);
 		xhr.setRequestHeader("Accept", "application/json");
@@ -38,5 +38,7 @@ export default class BatchPostRecords{
 			});
 		
 		xhr.send(this.content.join("\n"));
+
+		return xhr;
 	}
 }

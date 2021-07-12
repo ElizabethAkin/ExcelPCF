@@ -9,7 +9,7 @@ table.paleBlueRows {
     font-family: Arial, Helvetica, sans-serif;
     border: 1px solid #1C6EA4;
     width: 350px;
-    height: 200px;
+    max-height: 300px;
     text-align: center;
     border-collapse: collapse;
   }
@@ -19,7 +19,9 @@ table.paleBlueRows {
   }
   table.paleBlueRows tbody td {
     font-size: 13px;
+    z-index: 0;
   }
+  
   table.paleBlueRows tr:nth-child(even) {
     background: #D0E4F5;
   }
@@ -28,6 +30,10 @@ table.paleBlueRows {
     border-bottom: 2px solid #444444;
   }
   table.paleBlueRows thead th {
+    background: #1C6EA4;
+    position: sticky;
+    top: 0;
+    z-index: 2;
     font-size: 15px;
     font-weight: bold;
     color: #FFFFFF;
@@ -36,6 +42,16 @@ table.paleBlueRows {
   }
   table.paleBlueRows thead th:first-child {
     border-left: none;
+  }
+  table.paleBlueRows thead th:last-child{
+    background-color: black;
+    cursor: pointer;
+  }
+  table.paleBlueRows tbody th {
+    position: sticky;
+    left: 0;
+    background: white;
+    z-index: 1;
   }
   
   table.paleBlueRows tfoot {
@@ -48,3 +64,8 @@ table.paleBlueRows {
   table.paleBlueRows tfoot td {
     font-size: 14px;
   }
+
+.tableDiv{
+  overflow: scroll;
+  max-height: 400px;
+}
