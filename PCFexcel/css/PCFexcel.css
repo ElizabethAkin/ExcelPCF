@@ -69,3 +69,10 @@ table.paleBlueRows {
   overflow: scroll;
   max-height: 400px;
 }
+
+.errorClass{
+  background-color: red;
+}
+.validClass{
+  background-color: white;
+}

@@ -12,10 +12,10 @@ export default class BatchPostRecords{
         "\nContent-Type: application/http\nContent-Transfer-Encoding:binary";
 		this.content = [];
 	}
-	public addRequestItem(entity: Object): void{
+	public addRequestItem(entity: Object, entityName: string): void{
 		this.content.push(this.batchItemHeader);
 		this.content.push("");
-		this.content.push("POST " + this.apiUrl + "contacts" + " HTTP/1.1");
+		this.content.push("POST " + this.apiUrl + entityName + " HTTP/1.1");
 		this.content.push("Content-Type: application/json;type=entry");
 		this.content.push("");
 		this.content.push(JSON.stringify(entity));
