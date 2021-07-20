@@ -11,15 +11,15 @@ interface IDropdownOption{
 
 export class PCFexcel implements ComponentFramework.StandardControl<IInputs, IOutputs> {
 
-	private mainContainer: HTMLDivElement;
+	private _mainContainer: HTMLDivElement;
 	private _notifyOutputChanged: () => void;
-	private context: any;
-	private contextObj: ComponentFramework.Context<IInputs>;
+	private _context: any;
+	private _contextObj: ComponentFramework.Context<IInputs>;
 	private _entitySchemaName: string;
 	private _entityCollectionSchemaName: string;
 	private _url: string;
-	private options: IDropdownOption[]=[];
-	private areAttributesMapped: boolean;
+	private _options: IDropdownOption[]=[];
+	private _areAttributesMapped: boolean;
 	/**
 	 * Empty constructor.
 	 */
@@ -39,7 +39,8 @@ export class PCFexcel implements ComponentFramework.StandardControl<IInputs, IOu
 	public init(context: ComponentFramework.Context<IInputs>, notifyOutputChanged: () => void, state: ComponentFramework.Dictionary, container:HTMLDivElement)
 	{
 		this._notifyOutputChanged = notifyOutputChanged;
-		this.contextObj = context;
+		this._contextObj = context;
+		this._areAttributesMapped = false;
 
 		this._url = (<any>Xrm).Utility.getGlobalContext().getClientUrl();
 
@@ -47,8 +48,8 @@ export class PCFexcel implements ComponentFramework.StandardControl<IInputs, IOu
 		this._entitySchemaName = context.parameters.entitySchemaName.raw || "";
 		this._entityCollectionSchemaName = context.parameters.entityCollectionSchemaName.raw || "";
 
-		this.mainContainer = document.createElement("div");
-		this.mainContainer.innerHTML = `
+		this._mainContainer = document.createElement("div");
+		this._mainContainer.innerHTML = `
         	<input type="file" onchange="importf(this)" style="margin-bottom:10px"/>
 		`;
 
@@ -58,7 +59,7 @@ export class PCFexcel implements ComponentFramework.StandardControl<IInputs, IOu
 			<table id="tableWithDataFromExcel"></table>
 		`;
 		
-		this.mainContainer.appendChild(tableElement);
+		this._mainContainer.appendChild(tableElement);
 
 		var scriptXLSXPlugin = document.createElement("script");
 		scriptXLSXPlugin.type = "text/javascript";
@@ -136,16 +137,16 @@ export class PCFexcel implements ComponentFramework.StandardControl<IInputs, IOu
 		messageResponse.style.whiteSpace = "normal";
 		messageResponse.style.visibility="hidden";
 
-		this.mainContainer.appendChild(createButton);
-		this.mainContainer.appendChild(changeAttributesButton);
-		this.mainContainer.appendChild(messageResponse);
+		this._mainContainer.appendChild(createButton);
+		this._mainContainer.appendChild(changeAttributesButton);
+		this._mainContainer.appendChild(messageResponse);
 
 		container.appendChild(scriptElement);
-		container.appendChild(this.mainContainer);
+		container.appendChild(this._mainContainer);
 	}
 	
 	public changeAttributes(){
-		this.areAttributesMapped = true;
+		this._areAttributesMapped = true;
 		$("#changeAttributesButtonId").css("visibility","hidden");
 		this.populateAttributeMapping(this._entitySchemaName).then(
 			function(){
@@ -186,7 +187,7 @@ export class PCFexcel implements ComponentFramework.StandardControl<IInputs, IOu
 
 		var url: string = (<any>Xrm).Utility.getGlobalContext().getClientUrl();
 		var attributes = new Array();
-		if(this.areAttributesMapped)
+		if(this._areAttributesMapped)
 		{
 			$("#tableWithDataFromExcel thead tr:last-child th select").each(function(){
 				var opt = $(this);
@@ -207,8 +208,8 @@ export class PCFexcel implements ComponentFramework.StandardControl<IInputs, IOu
 		else{
 			$("#tableWithDataFromExcel thead tr th").each(function(){
 				attributes.push($(this).html());
-				attributes.pop();
 			});
+			attributes.pop();
 		}
 
 		var batchRequest = new BatchPostRecords(url + "/api/data/v9.1/");
