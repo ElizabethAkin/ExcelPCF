@@ -115,19 +115,11 @@ export class PCFexcel implements ComponentFramework.StandardControl<IInputs, IOu
 	 		$("#changeAttributesButtonId").css("visibility","visible");
 		}`;
 
-		var loadDropdownsButton = document.createElement("input");
-		loadDropdownsButton.id = "loadDropdownsButtonId";
-		loadDropdownsButton.type="button";
-		loadDropdownsButton.value="Load Dropdowns";
-		loadDropdownsButton.style.visibility="hidden";
-		loadDropdownsButton.onclick = () => this.loadDropdowns();
-
 		var changeAttributesButton = document.createElement("input");
 		changeAttributesButton.id = "changeAttributesButtonId";
 		changeAttributesButton.type="button";
 		changeAttributesButton.value="Map attributes";
 		changeAttributesButton.style.visibility="hidden";
-		//changeAttributesButton.style.visibility="hidden";
 		changeAttributesButton.onclick = () => this.changeAttributes();
 		var createButton = document.createElement("input");
 		createButton.id = "buttonCreateRecocrdsId";
@@ -138,12 +130,15 @@ export class PCFexcel implements ComponentFramework.StandardControl<IInputs, IOu
 
 		var messageResponse = document.createElement("div");
 		messageResponse.id = "messageResponse";
+		messageResponse.style.overflowWrap = "break-word";
+		messageResponse.style.wordBreak = "break-word"
+		messageResponse.style.hyphens = "auto";
+		messageResponse.style.whiteSpace = "normal";
 		messageResponse.style.visibility="hidden";
 
-		this.mainContainer.appendChild(loadDropdownsButton);
+		this.mainContainer.appendChild(createButton);
 		this.mainContainer.appendChild(changeAttributesButton);
 		this.mainContainer.appendChild(messageResponse);
-		this.mainContainer.appendChild(createButton);
 
 		container.appendChild(scriptElement);
 		container.appendChild(this.mainContainer);
@@ -175,24 +170,6 @@ export class PCFexcel implements ComponentFramework.StandardControl<IInputs, IOu
 			}
 		);
 		
-	}
-
-	public loadDropdowns(){
-		var attributes = "";
-		$("#tableWithDataFromExcel thead tr th:not(:last-child) ").each(function(){
-			attributes += $(this).html()+",";
-		});
-		attributes = attributes.substring(0, attributes.​length - 1);
-		debugger;
-		this.contextObj.webAPI.retrieveMultipleRecords(this._entitySchemaName, "?$select=" + attributes + "&$top=1").then(
-			function successCallback(value: any){
-
-			}, 
-			function errorCallback(error: any){
-				$("#messageResponse").css("visibility","visible");
-				$("#messageResponse").html("<p>Import failed: "+error.message+"</p>");
-				$("#messageResponse").css("color","red");
-			});
 	}
 
 	public createRecords(){
