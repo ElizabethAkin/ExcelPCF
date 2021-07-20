@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest>
-  <control namespace="PCFexcel" constructor="PCFexcel" version="0.0.53" display-name-key="PCFexcel" description-key="PCFexcel description" control-type="standard">
+  <control namespace="PCFexcel" constructor="PCFexcel" version="0.0.56" display-name-key="PCFexcel" description-key="PCFexcel for record creation" control-type="standard" preview-image="img/preview.png">
     <!-- dataset node represents a set of entity records on CDS; allow more than one datasets -->
     <data-set name="sampleDataSet" display-name-key="Dataset_Display_Key">
     </data-set>
-    <property name="entitySchemaName" display-name-key="Entity Name" description-key="Entity Schema Name" of-type="SingleLine.Text" usage="input" required="true" />
-    <property name="entityCollectionSchemaName" display-name-key="Entity Name" description-key="Entity Schema Collection Name" of-type="SingleLine.Text" usage="input" required="true" />
+    <property name="entitySchemaName" display-name-key="Entity Schema Name" description-key="Entity Schema Name" of-type="SingleLine.Text" usage="input" required="true" />
+    <property name="entityCollectionSchemaName" display-name-key="Entity Schema Collection Name" description-key="Entity Schema Collection Name" of-type="SingleLine.Text" usage="input" required="true" />
     <feature-usage>
       <uses-feature name="Utility" required="true" />
       <uses-feature name="WebAPI" required="true" />
@@ -14,17 +14,5 @@
       <code path="index.ts" order="1" />
       <css path="css/PCFexcel.css" order="1" />
     </resources>
-    <!-- UNCOMMENT TO ENABLE THE SPECIFIED API
-    <feature-usage>
-      <uses-feature name="Device.captureAudio" required="true" />
-      <uses-feature name="Device.captureImage" required="true" />
-      <uses-feature name="Device.captureVideo" required="true" />
-      <uses-feature name="Device.getBarcodeValue" required="true" />
-      <uses-feature name="Device.getCurrentPosition" required="true" />
-      <uses-feature name="Device.pickFile" required="true" />
-      <uses-feature name="Utility" required="true" />
-      <uses-feature name="WebAPI" required="true" />
-    </feature-usage>
-    -->
   </control>
 </manifest>

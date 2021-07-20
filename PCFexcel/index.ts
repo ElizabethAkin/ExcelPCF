@@ -206,7 +206,6 @@ export class PCFexcel implements ComponentFramework.StandardControl<IInputs, IOu
 		}
 		else{
 			$("#tableWithDataFromExcel thead tr th").each(function(){
-				debugger;
 				attributes.push($(this).html());
 				attributes.pop();
 			});
