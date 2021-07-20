@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest>
-  <control namespace="PCFexcel" constructor="PCFexcel" version="0.0.56" display-name-key="PCFexcel" description-key="PCFexcel for record creation" control-type="standard" preview-image="img/preview.png">
+  <control namespace="PCFexcel" constructor="PCFexcel" version="0.0.59" display-name-key="PCFexcel" description-key="PCFexcel for record creation" control-type="standard" preview-image="img/preview.png">
     <!-- dataset node represents a set of entity records on CDS; allow more than one datasets -->
     <data-set name="sampleDataSet" display-name-key="Dataset_Display_Key">
     </data-set>
